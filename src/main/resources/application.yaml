@@ -1,0 +1,30 @@
+server:
+  port: 9100
+
+spring:
+  application:
+    name: config-server
+
+  profiles:
+    active: git
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/athenhub/project-configs
+          default-label: main
+          search-paths:
+            - configs/common
+            - configs/{application}/{profile}
+            - configs/{application}
+eureka:
+  instance:
+    prefer-ip-address: false
+    hostname: config-server
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:9150/eureka/
